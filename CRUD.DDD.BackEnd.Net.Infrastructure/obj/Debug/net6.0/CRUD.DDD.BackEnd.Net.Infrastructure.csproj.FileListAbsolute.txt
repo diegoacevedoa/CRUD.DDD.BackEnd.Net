@@ -1,0 +1,15 @@
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.deps.json
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.dll
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.pdb
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Domain.dll
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Domain.pdb
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.csproj.AssemblyReference.cache
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.AssemblyInfoInputs.cache
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.AssemblyInfo.cs
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.csproj.CopyComplete
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.dll
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\obj\Debug\net6.0\refint\CRUD.DDD.BackEnd.Net.Infrastructure.dll
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.pdb
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Infrastructure\obj\Debug\net6.0\ref\CRUD.DDD.BackEnd.Net.Infrastructure.dll

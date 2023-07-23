@@ -1,0 +1,17 @@
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Application.deps.json
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Application.dll
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Application.pdb
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Domain.dll
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.dll
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Domain.pdb
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\bin\Debug\net6.0\CRUD.DDD.BackEnd.Net.Infrastructure.pdb
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Application.csproj.AssemblyReference.cache
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Application.AssemblyInfoInputs.cache
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Application.AssemblyInfo.cs
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Application.csproj.CoreCompileInputs.cache
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Application.csproj.CopyComplete
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Application.dll
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\obj\Debug\net6.0\refint\CRUD.DDD.BackEnd.Net.Application.dll
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\obj\Debug\net6.0\CRUD.DDD.BackEnd.Net.Application.pdb
+C:\Proyectos\CRUD\CRUD.DDD.BackEnd.Net\CRUD.DDD.BackEnd.Net.Application\obj\Debug\net6.0\ref\CRUD.DDD.BackEnd.Net.Application.dll
