@@ -32,7 +32,9 @@
 
 12- Agregar paquete de nuget Dapper en proyecto CRUD.DDD.BackEnd.Net.Application
 
-13- Agregar la interface IAggregateRoot en la carpeta SeedWork del proyecto CRUD.DDD.BackEnd.Net.Domain
+13- Agregar la interface IAggregateRoot en la carpeta SeedWork del proyecto CRUD.DDD.BackEnd.Net.Domain:
+
+public interface IAggregateRoot { }
 
 14- Agregar la carpeta PersonaAggregate en la carpeta AggregatesModel del proyecto CRUD.DDD.BackEnd.Net.Domain
 
