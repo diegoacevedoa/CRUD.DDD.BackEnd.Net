@@ -5,7 +5,7 @@
 
 2- Agregar el proyecto o biblioteca de clases a la solución: CRUD.DDD.BackEnd.Net.Application 
 
-3- Agregar las carpetas Commands, Queries y Services al proyecto CRUD.DDD.BackEnd.Net.Application y eliminar la clase Class1.cs
+3- Agregar las carpetas Commands, Queries, DTOs y Profiles al proyecto CRUD.DDD.BackEnd.Net.Application y eliminar la clase Class1.cs
 
 4- Agregar el proyecto o biblioteca de clases a la solución: CRUD.DDD.BackEnd.Net.Domain
 
@@ -32,7 +32,9 @@
 
 12- Agregar paquete de nuget Dapper en proyecto CRUD.DDD.BackEnd.Net.Application
 
-13- Agregar la interface IAggregateRoot en la carpeta SeedWork del proyecto CRUD.DDD.BackEnd.Net.Domain
+13- Agregar la interface IAggregateRoot en la carpeta SeedWork del proyecto CRUD.DDD.BackEnd.Net.Domain:
+
+public interface IAggregateRoot { }
 
 14- Agregar la carpeta PersonaAggregate en la carpeta AggregatesModel del proyecto CRUD.DDD.BackEnd.Net.Domain
 
@@ -330,86 +332,120 @@ using Microsoft.EntityFrameworkCore;
     "DataContext": "Server=localhost\\sqlexpress;Database=Prueba;user id=diego.acevedoa;password=Medellin1*;TrustServerCertificate=True;Trusted_Connection=True;MultipleActiveResultSets=true"
   }
 
-25- Creamos la carpeta Persona adentro de la carpeta Commands del proyecto CRUD.DDD.BackEnd.Net.Application
+25- Instalamos paquete de nuget package manager MediatR.Extensions.Microsoft.DependencyInjection en el proyecto CRUD.DDD.BackEnd.Net.API y CRUD.DDD.BackEnd.Net.Application, 
+    que sirve para mediar entre el controlador y los comandos o queries para disminuir el acoplamiento entre capas y agregamos las siguientes sentencias en el archivo Program.cs:
 
-26- Creamos la carpeta Create adentro de la carpeta Persona de Commands del proyecto CRUD.DDD.BackEnd.Net.Application
+builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatR(typeof(CreatePersonaCommand).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(UpdatePersonaCommand).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(DeletePersonaCommand).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(GetByIdPersonaQuery).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(GetPersonaQuery).GetTypeInfo().Assembly);
 
-27- Agregar la clase CreatePersonaCommand.cs en la carpeta Create de Persona de Commands de CRUD.DDD.BackEnd.Net.Application:
 
-    public class CreatePersonaCommand
+26- Instalamos paquete de nuget package manager AutoMapper.Extensions.Microsoft.DependencyInjection en el proyecto CRUD.DDD.BackEnd.Net.Application, 
+    que sirve para mapear las clases y agregamos las siguientes sentencias en el archivo Program.cs:
+
+var mappingConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
+
+IMapper mapper = mappingConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+27- Agregar la clase MappingProfile.cs en la carpeta Profiles de CRUD.DDD.BackEnd.Net.Application donde hacemos los mapeos de las clases:
+
+ public class MappingProfile : Profile
     {
-        public CreatePersonaCommand(string noDocumento, string nombres, string apellidos)
+        public MappingProfile()
         {
-            NoDocumento = noDocumento;
-            Nombres = nombres;
-            Apellidos = apellidos;
+
+            CreateMap<Persona, CreatePersonaCommandDto>()
+                .ForMember(m => m.IdPersona, map => map.MapFrom(vm => vm.IdPersona))
+                .ForMember(m => m.NoDocumento, map => map.MapFrom(vm => vm.NoDocumento.Value))
+                .ForMember(m => m.Nombres, map => map.MapFrom(vm => vm.Nombres.Value))
+                .ForMember(m => m.Apellidos, map => map.MapFrom(vm => vm.Apellidos.Value))
+                .ReverseMap();
         }
-
-        public string NoDocumento { get; private set; }
-
-        public string Nombres { get; private set; }
-
-        public string Apellidos { get; private set; }
     }
 
-28- Agregar la clase PersonaCommandDto.cs en la carpeta Create de Persona de Commands de CRUD.DDD.BackEnd.Net.Application:
+28- Creamos la carpeta Persona adentro de la carpeta Commands del proyecto CRUD.DDD.BackEnd.Net.Application
 
-    public class PersonaCommandDto
+29- Creamos la carpeta Create adentro de la carpeta Persona de Commands del proyecto CRUD.DDD.BackEnd.Net.Application
+
+30- Agregar la clase CreatePersonaCommand.cs en la carpeta Create de Persona de Commands de CRUD.DDD.BackEnd.Net.Application, utilizamos record en vez de class que simula una clase:
+
+using MediatR;
+
+    public record CreatePersonaCommand(string NoDocumento, string Nombres, string Apellidos) : IRequest<CreatePersonaCommandDto>;
+
+31- Agregar la clase CreatePersonaCommandDto.cs en la carpeta Create de Persona de Commands de CRUD.DDD.BackEnd.Net.Application:
+
+using System.Text.Json.Serialization;
+
+    public class CreatePersonaCommandDto
     {
+        [JsonPropertyName("idPersona")]
         public int IdPersona { get; set; }
 
+        [JsonPropertyName("noDocumento")]
         public string NoDocumento { get; set; }
 
+        [JsonPropertyName("nombres")]
         public string Nombres { get; set; }
 
+        [JsonPropertyName("apellidos")]
         public string Apellidos { get; set; }
     }
 
-28- Agregar la clase CreatePersonaCommandHandler.cs en la carpeta Create de Persona de Commands de CRUD.DDD.BackEnd.Net.Application:
+32- Agregar la clase CreatePersonaCommandHandler.cs en la carpeta Create de Persona de Commands de CRUD.DDD.BackEnd.Net.Application:
 
+using AutoMapper;
 using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
+using MediatR;
 
-    public class CreatePersonaCommandHandler
+
+    public class CreatePersonaCommandHandler : IRequestHandler<CreatePersonaCommand, CreatePersonaCommandDto>
     {
         private readonly IPersonaRepository _personaRepository;
+        private readonly IMapper _mapper;
 
-        public CreatePersonaCommandHandler(IPersonaRepository personaRepository)
+        public CreatePersonaCommandHandler(IPersonaRepository personaRepository, IMapper mapper)
         {
             _personaRepository = personaRepository;
+            _mapper = mapper;
         }
 
-        public async Task<PersonaCommandDto> Handle(CreatePersonaCommand createPersona)
+        public async Task<CreatePersonaCommandDto> Handle(CreatePersonaCommand request, CancellationToken cancellationToken)
         {
             var persona = new Domain.AggregatesModel.PersonaAggregate.Persona();
-            persona.SetNoDocumento(NoDocumento.Create(createPersona.NoDocumento));
-            persona.SetNombres(Nombres.Create(createPersona.Nombres));
-            persona.SetApellidos(Apellidos.Create(createPersona.Apellidos));
+            persona.SetNoDocumento(NoDocumento.Create(request.NoDocumento));
+            persona.SetNombres(Nombres.Create(request.Nombres));
+            persona.SetApellidos(Apellidos.Create(request.Apellidos));
 
             var result = await _personaRepository.AddAsync(persona);
 
-            return new PersonaCommandDto() { IdPersona = result.IdPersona, NoDocumento = result.NoDocumento.Value, Nombres = result.Nombres.Value, Apellidos = result.Apellidos.Value };
+            return _mapper.Map<CreatePersonaCommandDto>(result);
+
         }
     }
 
-29- Creamos la carpeta Delete adentro de la carpeta Persona de Commands del proyecto CRUD.DDD.BackEnd.Net.Application 
+33- Creamos la carpeta Delete adentro de la carpeta Persona de Commands del proyecto CRUD.DDD.BackEnd.Net.Application 
 
-30- Agregar la clase DeletePersonaCommand.cs en la carpeta Delete de Persona de Commands de CRUD.DDD.BackEnd.Net.Application:
+34- Agregar la clase DeletePersonaCommand.cs en la carpeta Delete de Persona de Commands de CRUD.DDD.BackEnd.Net.Application, utilizamos record en vez de class que simula una clase:
 
-    public class DeletePersonaCommand
-    {
-        public DeletePersonaCommand(int idPersona)
-        {
-            IdPersona = idPersona;
-        }
+using MediatR;
 
-        public int IdPersona { get; private set; }
-    }
+public record DeletePersonaCommand(int IdPersona) : IRequest<bool>;
 
-31- Agregar la clase DeletePersonaCommandHandler.cs en la carpeta Delete de Persona de Commands de CRUD.DDD.BackEnd.Net.Application:
+35- Agregar la clase DeletePersonaCommandHandler.cs en la carpeta Delete de Persona de Commands de CRUD.DDD.BackEnd.Net.Application:
 
 using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
+using MediatR;
 
-    public class DeletePersonaCommandHandler
+    public class DeletePersonaCommandHandler : IRequestHandler<DeletePersonaCommand, bool>
     {
         private readonly IPersonaRepository _personaRepository;
 
@@ -418,41 +454,26 @@ using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
             _personaRepository = personaRepository;
         }
 
-        public async Task<bool> Handle(DeletePersonaCommand deletePersona)
+        public async Task<bool> Handle(DeletePersonaCommand request, CancellationToken cancellationToken)
         {
-            return await _personaRepository.DeleteAsync(IdPersona.Create(deletePersona.IdPersona));
+            return await _personaRepository.DeleteAsync(IdPersona.Create(request.IdPersona));
         }
     }
 
+36- Creamos la carpeta Update adentro de la carpeta Persona de Commands del proyecto CRUD.DDD.BackEnd.Net.Application 
 
-32- Creamos la carpeta Update adentro de la carpeta Persona de Commands del proyecto CRUD.DDD.BackEnd.Net.Application 
+37- Agregar la clase UpdatePersonaCommand.cs en la carpeta Update de Persona de Commands de CRUD.DDD.BackEnd.Net.Application, utilizamos record en vez de class que simula una clase:
 
-33- Agregar la clase UpdatePersonaCommand.cs en la carpeta Update de Persona de Commands de CRUD.DDD.BackEnd.Net.Application:
+using MediatR;
 
-    public class UpdatePersonaCommand
-    {
-        public UpdatePersonaCommand(int idPersona, string noDocumento, string nombres, string apellidos)
-        {
-            IdPersona = idPersona;
-            NoDocumento = noDocumento;
-            Nombres = nombres;
-            Apellidos = apellidos;
-        }
+    public record UpdatePersonaCommand(int IdPersona, string NoDocumento, string Nombres, string Apellidos) : IRequest<bool>;
 
-        public int IdPersona { get; private set; }
-
-        public string NoDocumento { get; private set; }
-
-        public string Nombres { get; private set; }
-
-        public string Apellidos { get; private set; }
-    }
-
-34- Agregar la clase UpdatePersonaCommandHandler.cs en la carpeta Update de Persona de Commands de CRUD.DDD.BackEnd.Net.Application:
+38- Agregar la clase UpdatePersonaCommandHandler.cs en la carpeta Update de Persona de Commands de CRUD.DDD.BackEnd.Net.Application:
 
 using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
+using MediatR;
 
-    public class UpdatePersonaCommandHandler
+    public class UpdatePersonaCommandHandler : IRequestHandler<UpdatePersonaCommand, bool>
     {
         private readonly IPersonaRepository _personaRepository;
 
@@ -461,55 +482,69 @@ using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
             _personaRepository = personaRepository;
         }
 
-        public async Task<bool> Handle(UpdatePersonaCommand updatePersona)
+        public async Task<bool> Handle(UpdatePersonaCommand request, CancellationToken cancellationToken)
         {
-            var persona = await _personaRepository.GetByIdAsync(IdPersona.Create(updatePersona.IdPersona));
+            var persona = await _personaRepository.GetByIdAsync(IdPersona.Create(request.IdPersona));
 
             if (persona is null)
             {
                 throw new ArgumentException("No se pudo actualizar el registro.");
             }
 
-            persona.SetNoDocumento(NoDocumento.Create(updatePersona.NoDocumento));
-            persona.SetNombres(Nombres.Create(updatePersona.Nombres));
-            persona.SetApellidos(Apellidos.Create(updatePersona.Apellidos));
+            persona.SetNoDocumento(NoDocumento.Create(request.NoDocumento));
+            persona.SetNombres(Nombres.Create(request.Nombres));
+            persona.SetApellidos(Apellidos.Create(request.Apellidos));
 
             return await _personaRepository.UpdateAsync(persona);
         }
     }
 
 
-35- Creamos la carpeta Persona adentro de la carpeta Queries del proyecto CRUD.DDD.BackEnd.Net.Application
+39- Creamos la carpeta Persona adentro de la carpeta Queries del proyecto CRUD.DDD.BackEnd.Net.Application
 
-36- Agregar la clase GetPersonaQueryDto.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
+40- Agregar la clase GetPersonaQueryDto.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
+
+using System.Text.Json.Serialization;
 
     public class GetPersonaQueryDto
     {
+        [JsonPropertyName("idPersona")]
         public int IdPersona { get; set; }
 
+        [JsonPropertyName("noDocumento")]
         public string NoDocumento { get; set; }
 
+        [JsonPropertyName("nombres")]
         public string Nombres { get; set; }
 
+        [JsonPropertyName("apellidos")]
         public string Apellidos { get; set; }
     }
 
+41- Agregar la clase GetPersonaQuery.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
 
-37- Agregar la clase GetAllPersonaQueryHandler.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
+using MediatR;
 
-    using Dapper;
-    using Microsoft.Data.SqlClient;
+public record GetPersonaQuery : IRequest<IEnumerable<GetPersonaQueryDto>>;
 
-    public class GetAllPersonaQueryHandler
+
+42- Agregar la clase GetAllPersonaQueryHandler.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
+
+using Dapper;
+using MediatR;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+
+    public class GetAllPersonaQueryHandler : IRequestHandler<GetPersonaQuery, IEnumerable<GetPersonaQueryDto>>
     {
         private readonly string _connectionString;
 
-        public GetAllPersonaQueryHandler(string connectionString)
+        public GetAllPersonaQueryHandler(IConfiguration config)
         {
-            _connectionString = connectionString;
+            _connectionString = config.GetConnectionString("DataContext") ?? throw new InvalidOperationException("Connection string 'DataContext' not found.");
         }
 
-        public async Task<List<GetPersonaQueryDto>> Handle()
+        public async Task<IEnumerable<GetPersonaQueryDto>> Handle(GetPersonaQuery request, CancellationToken cancellationToken)
         {
             using var connection = new SqlConnection(_connectionString);
             connection.Open();
@@ -523,41 +558,37 @@ using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
         }
     }
 
-38- Agregar la clase GetByIdPersonaQuery.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
+43- Agregar la clase GetByIdPersonaQuery.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
 
-    public class GetByIdPersonaQuery
-    {
-        public GetByIdPersonaQuery(int idPersona)
-        {
-            IdPersona = idPersona;
-        }
+using MediatR;
 
-        public int IdPersona { get; private set; }
-    }
+    public record GetByIdPersonaQuery(int IdPersona) : IRequest<GetPersonaQueryDto?>;
 
 
-39- Agregar la clase GetByIdPersonaQueryHandler.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
+44- Agregar la clase GetByIdPersonaQueryHandler.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
 
 using Dapper;
+using MediatR;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 
-   public class GetByIdPersonaQueryHandler
+    public class GetByIdPersonaQueryHandler : IRequestHandler<GetByIdPersonaQuery, GetPersonaQueryDto?>
     {
         private readonly string _connectionString;
 
-        public GetByIdPersonaQueryHandler(string connectionString)
+        public GetByIdPersonaQueryHandler(IConfiguration config)
         {
-            _connectionString = connectionString;
+            _connectionString = config.GetConnectionString("DataContext") ?? throw new InvalidOperationException("Connection string 'DataContext' not found.");
         }
 
-        public async Task<GetPersonaQueryDto> Handle(GetByIdPersonaQuery getByIdPersona)
+        public async Task<GetPersonaQueryDto?> Handle(GetByIdPersonaQuery request, CancellationToken cancellationToken)
         {
             using var connection = new SqlConnection(_connectionString);
             connection.Open();
 
             string queryString = string.Format("{0}{1}", @"SELECT [IdPersona], [NoDocumento], [Nombres], [Apellidos]
                                                         FROM [dbo].[Persona] 
-                                                        WHERE [IdPersona] = ", getByIdPersona.IdPersona);
+                                                        WHERE [IdPersona] = ", request.IdPersona);
 
             var persona = await connection.QueryAsync<GetPersonaQueryDto>(queryString);
 
@@ -566,133 +597,103 @@ using Microsoft.Data.SqlClient;
     }
 
 
-40- Creamos la carpeta Persona adentro de la carpeta Services del proyecto CRUD.DDD.BackEnd.Net.Application
+45- Agregar la clase CreatePersonaDto.cs en la carpeta DTOs de CRUD.DDD.BackEnd.Net.Application:
 
-41- Agregar la clase IPersonaService.cs en la carpeta Persona de Services de CRUD.DDD.BackEnd.Net.Application:
+using System.ComponentModel.DataAnnotations;
+
+    public class CreatePersonaDto
+    {
+        [Required(ErrorMessage = "El campo NoDocumento es requerido.")]
+        [StringLength(50)]
+        public string NoDocumento { get; set; }
+
+        [Required(ErrorMessage = "El campo Nombres es requerido.")]
+        [StringLength(100)]
+        public string Nombres { get; set; }
+
+        [Required(ErrorMessage = "El campo Apellidos es requerido.")]
+        [StringLength(100)]
+        public string Apellidos { get; set; }
+    }
+
+
+46- Agregar la clase UpdatePersonaDto.cs en la carpeta DTOs de CRUD.DDD.BackEnd.Net.Application:
+
+    public class UpdatePersonaDto
+    {
+        [Required(ErrorMessage = "El campo IdPersona es requerido.")]
+        public int IdPersona { get; set; }
+
+        [Required(ErrorMessage = "El campo NoDocumento es requerido.")]
+        [StringLength(50)]
+        public string NoDocumento { get; set; }
+
+        [Required(ErrorMessage = "El campo Nombres es requerido.")]
+        [StringLength(100)]
+        public string Nombres { get; set; }
+
+        [Required(ErrorMessage = "El campo Apellidos es requerido.")]
+        [StringLength(100)]
+        public string Apellidos { get; set; }
+    }
+
+
+47- Agregar "Controlador de API con acciones de lectura y escritura": PersonasController.cs
 
 using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Create;
 using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Delete;
 using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Update;
+using CRUD.DDD.BackEnd.Net.Application.DTOs;
 using CRUD.DDD.BackEnd.Net.Application.Queries.Persona;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
-     public interface IPersonaService
-    {
-        Task<List<GetPersonaQueryDto>> GetAllAsync();
-
-        Task<GetPersonaQueryDto> GetByIdAsync(GetByIdPersonaQuery getByIdPersona);
-
-        Task<PersonaCommandDto> AddAsync(CreatePersonaCommand createPersona);
-
-        Task<bool> UpdateAsync(UpdatePersonaCommand updatePersona);
-
-        Task<bool> DeleteAsync(DeletePersonaCommand deletePersona);
-    }
-
-
-42- Agregar la clase PersonaService.cs en la carpeta Persona de Services de CRUD.DDD.BackEnd.Net.Application:
-
-using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Create;
-using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Delete;
-using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Update;
-using CRUD.DDD.BackEnd.Net.Application.Queries.Persona;
-
-    public class PersonaService : IPersonaService
-    {
-        private readonly CreatePersonaCommandHandler _createPersonaCommandHandler;
-        private readonly UpdatePersonaCommandHandler _updatePersonaCommandHandler;
-        private readonly DeletePersonaCommandHandler _deletePersonaCommandHandler;
-        private readonly GetAllPersonaQueryHandler _getAllPersonaQueryHandler;
-        private readonly GetByIdPersonaQueryHandler _getByIdPersonaQueryHandler;
-
-        public PersonaService(
-            CreatePersonaCommandHandler createPersonaCommandHandler,
-            UpdatePersonaCommandHandler updatePersonaCommandHandler,
-            DeletePersonaCommandHandler deletePersonaCommandHandler,
-            GetAllPersonaQueryHandler getAllPersonaQueryHandler,
-             GetByIdPersonaQueryHandler getByIdPersonaQueryHandler
-            )
-        {
-            _createPersonaCommandHandler = createPersonaCommandHandler;
-            _updatePersonaCommandHandler = updatePersonaCommandHandler;
-            _deletePersonaCommandHandler = deletePersonaCommandHandler;
-            _getAllPersonaQueryHandler = getAllPersonaQueryHandler;
-            _getByIdPersonaQueryHandler = getByIdPersonaQueryHandler;
-        }
-
-        public async Task<List<GetPersonaQueryDto>> GetAllAsync()
-        {
-            return await _getAllPersonaQueryHandler.Handle();
-        }
-
-        public async Task<GetPersonaQueryDto> GetByIdAsync(GetByIdPersonaQuery getByIdPersona)
-        {
-            return await _getByIdPersonaQueryHandler.Handle(getByIdPersona);
-        }
-
-        public async Task<PersonaCommandDto> AddAsync(CreatePersonaCommand createPersona)
-        {
-            return await _createPersonaCommandHandler.Handle(createPersona);
-        }
-
-        public async Task<bool> UpdateAsync(UpdatePersonaCommand updatePersona)
-        {
-            return await _updatePersonaCommandHandler.Handle(updatePersona);
-        }
-
-        public async Task<bool> DeleteAsync(DeletePersonaCommand deletePersona)
-        {
-            return await _deletePersonaCommandHandler.Handle(deletePersona);
-        }
-    }
-
-
-43- Agregar "Controlador de API con acciones de lectura y escritura": PersonasController.cs
-
-
- [Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class PersonasController : ControllerBase
     {
-        private readonly IPersonaService _personaService;
+        private readonly ISender _sender;
 
-        public PersonasController(IPersonaService personaService)
+        public PersonasController(ISender sender)
         {
-            _personaService = personaService;
+            _sender = sender;
         }
 
         // GET: api/<PersonasController>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<GetPersonaQueryDto>>> GetAllPersona()
         {
-            return await _personaService.GetAllAsync();
+            var personas = await _sender.Send(new GetPersonaQuery());
+
+            return Ok(personas);
         }
 
         // GET api/<PersonasController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetPersonaQueryDto>> GetByIdPersona(int id)
+        public async Task<ActionResult<GetPersonaQueryDto?>> GetByIdPersona(int id)
         {
-            return await _personaService.GetByIdAsync(new GetByIdPersonaQuery(id));
+            return await _sender.Send(new GetByIdPersonaQuery(id));
         }
 
         // POST api/<PersonasController>
         [HttpPost]
-        public async Task<ActionResult<PersonaCommandDto>> Post([FromBody] CreatePersonaCommand createPersona)
+        public async Task<ActionResult<CreatePersonaCommandDto>> Post([FromBody] CreatePersonaDto createPersona)
         {
-            var result = await _personaService.AddAsync(createPersona);
+            var result = await _sender.Send(new CreatePersonaCommand(createPersona.NoDocumento, createPersona.Nombres, createPersona.Apellidos));
 
             return CreatedAtAction("GetByIdPersona", new { id = result.IdPersona }, result);
         }
 
         // PUT api/<PersonasController>/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] UpdatePersonaCommand updatePersona)
+        public async Task<IActionResult> Put(int id, [FromBody] UpdatePersonaDto updatePersona)
         {
             if (id != updatePersona.IdPersona)
             {
                 return BadRequest();
             }
 
-            await _personaService.UpdateAsync(updatePersona);
+            await _sender.Send(new UpdatePersonaCommand(id, updatePersona.NoDocumento, updatePersona.Nombres, updatePersona.Apellidos));
 
             return NoContent();
         }
@@ -701,14 +702,14 @@ using CRUD.DDD.BackEnd.Net.Application.Queries.Persona;
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _personaService.DeleteAsync(new DeletePersonaCommand(id));
+            await _sender.Send(new DeletePersonaCommand(id));
 
             return NoContent();
         }
     }
 
 
-44- Agregar Cors en archivo Program.cs después de builder:
+48- Agregar Cors en archivo Program.cs después de builder:
 
 builder.Services.AddCors(options =>
 {
@@ -718,7 +719,7 @@ builder.Services.AddCors(options =>
 
 app.UseCors("Personas.CORS");
 
-45- Agregar ConnectionStrings en archivo Program.cs después de builder:
+49- Agregar ConnectionStrings en archivo Program.cs después de builder:
 
 using CRUD.DDD.BackEnd.Net.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
@@ -727,15 +728,89 @@ builder.Services.AddDbContext<DataContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DataContext") ?? throw new InvalidOperationException("Connection string 'DataContext' not found.")));
 
 
-46- Realizamos inyección de dependencias en archivo Program.cs después de builder:
+50- Realizamos inyección de dependencias en archivo Program.cs después de builder:
 
 builder.Services.AddTransient<IPersonaRepository, PersonaRepository>();
-builder.Services.AddTransient<IPersonaService, PersonaService>();
 builder.Services.AddTransient<CreatePersonaCommandHandler>();
 builder.Services.AddTransient<DeletePersonaCommandHandler>();
 builder.Services.AddTransient<UpdatePersonaCommandHandler>();
-builder.Services.AddTransient(x => new GetAllPersonaQueryHandler(builder.Configuration.GetConnectionString("DataContext")));
-builder.Services.AddTransient(x => new GetByIdPersonaQueryHandler(builder.Configuration.GetConnectionString("DataContext")));
+builder.Services.AddTransient<GetAllPersonaQueryHandler>();
+builder.Services.AddTransient<GetByIdPersonaQueryHandler>();
+
+51- El archivo Program.cs del proyecto CRUD.DDD.BackEnd.Net.API queda así:
+
+using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Create;
+using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Delete;
+using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Update;
+using CRUD.DDD.BackEnd.Net.Application.Queries.Persona;
+using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
+using CRUD.DDD.BackEnd.Net.Infrastructure.Data.Context;
+using CRUD.DDD.BackEnd.Net.Infrastructure.Data.Repositories;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using AutoMapper;
+using CRUD.DDD.BackEnd.Net.Application.Profiles;
+
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddDbContext<DataContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DataContext") ?? throw new InvalidOperationException("Connection string 'DataContext' not found.")));
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Personas.CORS", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
+// Add services to the container.
+
+builder.Services.AddTransient<IPersonaRepository, PersonaRepository>();
+builder.Services.AddTransient<CreatePersonaCommandHandler>();
+builder.Services.AddTransient<DeletePersonaCommandHandler>();
+builder.Services.AddTransient<UpdatePersonaCommandHandler>();
+builder.Services.AddTransient<GetAllPersonaQueryHandler>();
+builder.Services.AddTransient<GetByIdPersonaQueryHandler>();
+
+builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatR(typeof(CreatePersonaCommand).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(UpdatePersonaCommand).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(DeletePersonaCommand).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(GetByIdPersonaQuery).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(GetPersonaQuery).GetTypeInfo().Assembly);
+
+var mappingConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
+
+IMapper mapper = mappingConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 
-47- Ejecutar y probar
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseCors("Personas.CORS");
+
+app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();
+
+
+52- Ejecutar y probar
