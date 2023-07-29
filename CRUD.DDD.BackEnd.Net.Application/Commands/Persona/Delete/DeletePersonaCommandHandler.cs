@@ -1,8 +1,9 @@
 ﻿using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
+using MediatR;
 
 namespace CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Delete
 {
-    public class DeletePersonaCommandHandler
+    public class DeletePersonaCommandHandler : IRequestHandler<DeletePersonaCommand, bool>
     {
         private readonly IPersonaRepository _personaRepository;
 
@@ -11,9 +12,9 @@ namespace CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Delete
             _personaRepository = personaRepository;
         }
 
-        public async Task<bool> Handle(DeletePersonaCommand deletePersona)
+        public async Task<bool> Handle(DeletePersonaCommand request, CancellationToken cancellationToken)
         {
-            return await _personaRepository.DeleteAsync(IdPersona.Create(deletePersona.IdPersona));
+            return await _personaRepository.DeleteAsync(IdPersona.Create(request.IdPersona));
         }
     }
 }

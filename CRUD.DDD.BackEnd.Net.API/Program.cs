@@ -2,11 +2,14 @@ using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Create;
 using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Delete;
 using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Update;
 using CRUD.DDD.BackEnd.Net.Application.Queries.Persona;
-using CRUD.DDD.BackEnd.Net.Application.Services.Persona;
 using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
 using CRUD.DDD.BackEnd.Net.Infrastructure.Data.Context;
 using CRUD.DDD.BackEnd.Net.Infrastructure.Data.Repositories;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
+using AutoMapper;
+using CRUD.DDD.BackEnd.Net.Application.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,12 +24,27 @@ builder.Services.AddCors(options =>
 // Add services to the container.
 
 builder.Services.AddTransient<IPersonaRepository, PersonaRepository>();
-builder.Services.AddTransient<IPersonaService, PersonaService>();
 builder.Services.AddTransient<CreatePersonaCommandHandler>();
 builder.Services.AddTransient<DeletePersonaCommandHandler>();
 builder.Services.AddTransient<UpdatePersonaCommandHandler>();
-builder.Services.AddTransient(x => new GetAllPersonaQueryHandler(builder.Configuration.GetConnectionString("DataContext")));
-builder.Services.AddTransient(x => new GetByIdPersonaQueryHandler(builder.Configuration.GetConnectionString("DataContext")));
+builder.Services.AddTransient<GetAllPersonaQueryHandler>();
+builder.Services.AddTransient<GetByIdPersonaQueryHandler>();
+
+builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
+builder.Services.AddMediatR(typeof(CreatePersonaCommand).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(UpdatePersonaCommand).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(DeletePersonaCommand).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(GetByIdPersonaQuery).GetTypeInfo().Assembly);
+builder.Services.AddMediatR(typeof(GetPersonaQuery).GetTypeInfo().Assembly);
+
+var mappingConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
+
+IMapper mapper = mappingConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 
 builder.Services.AddControllers();

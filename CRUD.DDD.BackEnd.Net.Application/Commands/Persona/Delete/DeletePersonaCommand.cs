@@ -1,12 +1,6 @@
-﻿namespace CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Delete
-{
-    public class DeletePersonaCommand
-    {
-        public DeletePersonaCommand(int idPersona)
-        {
-            IdPersona = idPersona;
-        }
+﻿using MediatR;
 
-        public int IdPersona { get; private set; }
-    }
+namespace CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Delete
+{
+    public record DeletePersonaCommand(int IdPersona) : IRequest<bool>;
 }
