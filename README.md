@@ -1,9 +1,8 @@
-	
-   	PASOS DESARROLLO CRUD CON ARQUITECTURA DDD (DRIVEN DOMAIN DESIGN).NET CORE
+PASOS DESARROLLO CRUD CON ARQUITECTURA DDD (DRIVEN DOMAIN DESIGN).NET CORE
 
 1- Creamos un nuevo proyecto CRUD.DDD.BackEnd.Net.API con la solución CRUD.DDD.BackEnd.Net: ASP.NET Core Web API en Visual Studio 2022, Framework 6.0.
 
-2- Agregar el proyecto o biblioteca de clases a la solución: CRUD.DDD.BackEnd.Net.Application 
+2- Agregar el proyecto o biblioteca de clases a la solución: CRUD.DDD.BackEnd.Net.Application
 
 3- Agregar las carpetas Commands, Queries, DTOs y Profiles al proyecto CRUD.DDD.BackEnd.Net.Application y eliminar la clase Class1.cs
 
@@ -14,19 +13,19 @@
 6- Agregar el proyecto o biblioteca de clases a la solución: CRUD.DDD.BackEnd.Net.Infrastructure
 
 7- Agregar carpeta con nombre de la base de datos "Data" y agregar las sgtes carpetas adentro de esta:
-   Context, EntityConfigurations y Repositories al proyecto CRUD.DDD.BackEnd.Net.Infrastructure y eliminar la clase Class1.cs
+Context, EntityConfigurations y Repositories al proyecto CRUD.DDD.BackEnd.Net.Infrastructure y eliminar la clase Class1.cs
 
 8- Agregar Proyecto de prueba unitaria (.NET Framework) con pruebas de MSTest a la solución: CRUD.DDD.BackEnd.Net.Test
 
 9- Agregar la carpeta Controllers al proyecto CRUD.DDD.BackEnd.Net.Test
-   y eliminar la clase Class1.cs
+y eliminar la clase Class1.cs
 
 10- Agregar dependencias de proyectos:
-    CRUD.DDD.BackEnd.Net.Infrastructure Depende de CRUD.DDD.BackEnd.Net.Domain
-    CRUD.DDD.BackEnd.Net.Application    Depende de CRUD.DDD.BackEnd.Net.Domain
-    CRUD.DDD.BackEnd.Net.Application    Depende de CRUD.DDD.BackEnd.Net.Infrastructure
-    CRUD.DDD.BackEnd.Net.API            Depende de CRUD.DDD.BackEnd.Net.Application
-    CRUD.DDD.BackEnd.Net.Test           Depende de CRUD.DDD.BackEnd.Net.API
+CRUD.DDD.BackEnd.Net.Infrastructure Depende de CRUD.DDD.BackEnd.Net.Domain
+CRUD.DDD.BackEnd.Net.Application Depende de CRUD.DDD.BackEnd.Net.Domain
+CRUD.DDD.BackEnd.Net.Application Depende de CRUD.DDD.BackEnd.Net.Infrastructure
+CRUD.DDD.BackEnd.Net.API Depende de CRUD.DDD.BackEnd.Net.Application
+CRUD.DDD.BackEnd.Net.Test Depende de CRUD.DDD.BackEnd.Net.API
 
 11- Agregar paquete de nuget Microsoft.EntityFrameworkCore.SqlServer en proyecto CRUD.DDD.BackEnd.Net.Infrastructure
 
@@ -96,7 +95,6 @@ public interface IAggregateRoot { }
         }
     }
 
-
 17- Creamos atributo Nombres de la entidad Persona en la carpeta PersonaAggregate de CRUD.DDD.BackEnd.Net.Domain como clase con sus diferentes métodos y validaciones: Nombres.cs
 
     public record Nombres
@@ -128,7 +126,6 @@ public interface IAggregateRoot { }
         }
     }
 
-
 18- Creamos atributo Apellidos de la entidad Persona en la carpeta PersonaAggregate de CRUD.DDD.BackEnd.Net.Domain como clase con sus diferentes métodos y validaciones: Apellidos.cs
 
     public record Apellidos
@@ -159,7 +156,6 @@ public interface IAggregateRoot { }
             }
         }
     }
-
 
 19- Agregar la clase Persona.cs en la carpeta PersonaAggregate de CRUD.DDD.BackEnd.Net.Domain con sus diferentes atributos y comportamientos:
 
@@ -201,7 +197,6 @@ public interface IAggregateRoot { }
         #endregion
     }
 
-
 20- Agregar la clase DataContext.cs en la carpeta Context de CRUD.DDD.BackEnd.Net.Infrastructure:
 
 using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
@@ -228,8 +223,6 @@ using Microsoft.EntityFrameworkCore;
         }
     }
 
-
-
 21- Agregar la clase PersonaConfiguration.cs en la carpeta EntityConfigurations de CRUD.DDD.BackEnd.Net.Infrastructure:
 
 using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
@@ -252,7 +245,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
             builder.Property(x => x.Apellidos).IsRequired().HasMaxLength(100).HasConversion(apellidos => apellidos.Value, value => Apellidos.Create(value));
         }
     }
-
 
 22- Agregar la interface IPersonaRepository.cs en la carpeta PersonaAggregate de CRUD.DDD.BackEnd.Net.Domain:
 
@@ -326,14 +318,14 @@ using Microsoft.EntityFrameworkCore;
         }
     }
 
-24- Agregamos ConnectionStrings en archivo appsettings.json del proyecto inicial: CRUD.DDD.BackEnd.Net.API 
+24- Agregamos ConnectionStrings en archivo appsettings.json del proyecto inicial: CRUD.DDD.BackEnd.Net.API
 
 ,"ConnectionStrings": {
-    "DataContext": "Server=localhost\\sqlexpress;Database=Prueba;user id=diego.acevedoa;password=Medellin1*;TrustServerCertificate=True;Trusted_Connection=True;MultipleActiveResultSets=true"
-  }
+"DataContext": "Server=localhost\\sqlexpress;Database=Prueba;user id=diego.acevedoa;password=Medellin1\*;TrustServerCertificate=True;Trusted_Connection=True;MultipleActiveResultSets=true"
+}
 
-25- Instalamos paquete de nuget package manager MediatR.Extensions.Microsoft.DependencyInjection en el proyecto CRUD.DDD.BackEnd.Net.API y CRUD.DDD.BackEnd.Net.Application, 
-    que sirve para mediar entre el controlador y los comandos o queries para disminuir el acoplamiento entre capas y agregamos las siguientes sentencias en el archivo Program.cs:
+25- Instalamos paquete de nuget package manager MediatR.Extensions.Microsoft.DependencyInjection en el proyecto CRUD.DDD.BackEnd.Net.API y CRUD.DDD.BackEnd.Net.Application,
+que sirve para mediar entre el controlador y los comandos o queries para disminuir el acoplamiento entre capas y agregamos las siguientes sentencias en el archivo Program.cs:
 
 builder.Services.AddMediatR(typeof(Program));
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
@@ -343,13 +335,12 @@ builder.Services.AddMediatR(typeof(DeletePersonaCommand).GetTypeInfo().Assembly)
 builder.Services.AddMediatR(typeof(GetByIdPersonaQuery).GetTypeInfo().Assembly);
 builder.Services.AddMediatR(typeof(GetPersonaQuery).GetTypeInfo().Assembly);
 
-
-26- Instalamos paquete de nuget package manager AutoMapper.Extensions.Microsoft.DependencyInjection en el proyecto CRUD.DDD.BackEnd.Net.Application, 
-    que sirve para mapear las clases y agregamos las siguientes sentencias en el archivo Program.cs:
+26- Instalamos paquete de nuget package manager AutoMapper.Extensions.Microsoft.DependencyInjection en el proyecto CRUD.DDD.BackEnd.Net.Application,
+que sirve para mapear las clases y agregamos las siguientes sentencias en el archivo Program.cs:
 
 var mappingConfig = new MapperConfiguration(mc =>
 {
-    mc.AddProfile(new MappingProfile());
+mc.AddProfile(new MappingProfile());
 });
 
 IMapper mapper = mappingConfig.CreateMapper();
@@ -357,10 +348,10 @@ builder.Services.AddSingleton(mapper);
 
 27- Agregar la clase MappingProfile.cs en la carpeta Profiles de CRUD.DDD.BackEnd.Net.Application donde hacemos los mapeos de las clases:
 
- public class MappingProfile : Profile
-    {
-        public MappingProfile()
-        {
+public class MappingProfile : Profile
+{
+public MappingProfile()
+{
 
             CreateMap<Persona, CreatePersonaCommandDto>()
                 .ForMember(m => m.IdPersona, map => map.MapFrom(vm => vm.IdPersona))
@@ -406,7 +397,6 @@ using AutoMapper;
 using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
 using MediatR;
 
-
     public class CreatePersonaCommandHandler : IRequestHandler<CreatePersonaCommand, CreatePersonaCommandDto>
     {
         private readonly IPersonaRepository _personaRepository;
@@ -432,7 +422,7 @@ using MediatR;
         }
     }
 
-33- Creamos la carpeta Delete adentro de la carpeta Persona de Commands del proyecto CRUD.DDD.BackEnd.Net.Application 
+33- Creamos la carpeta Delete adentro de la carpeta Persona de Commands del proyecto CRUD.DDD.BackEnd.Net.Application
 
 34- Agregar la clase DeletePersonaCommand.cs en la carpeta Delete de Persona de Commands de CRUD.DDD.BackEnd.Net.Application, utilizamos record en vez de class que simula una clase:
 
@@ -460,7 +450,7 @@ using MediatR;
         }
     }
 
-36- Creamos la carpeta Update adentro de la carpeta Persona de Commands del proyecto CRUD.DDD.BackEnd.Net.Application 
+36- Creamos la carpeta Update adentro de la carpeta Persona de Commands del proyecto CRUD.DDD.BackEnd.Net.Application
 
 37- Agregar la clase UpdatePersonaCommand.cs en la carpeta Update de Persona de Commands de CRUD.DDD.BackEnd.Net.Application, utilizamos record en vez de class que simula una clase:
 
@@ -499,7 +489,6 @@ using MediatR;
         }
     }
 
-
 39- Creamos la carpeta Persona adentro de la carpeta Queries del proyecto CRUD.DDD.BackEnd.Net.Application
 
 40- Agregar la clase GetPersonaQueryDto.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
@@ -526,7 +515,6 @@ using System.Text.Json.Serialization;
 using MediatR;
 
 public record GetPersonaQuery : IRequest<IEnumerable<GetPersonaQueryDto>>;
-
 
 42- Agregar la clase GetAllPersonaQueryHandler.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
 
@@ -564,7 +552,6 @@ using MediatR;
 
     public record GetByIdPersonaQuery(int IdPersona) : IRequest<GetPersonaQueryDto?>;
 
-
 44- Agregar la clase GetByIdPersonaQueryHandler.cs en la carpeta Persona de Queries de CRUD.DDD.BackEnd.Net.Application:
 
 using Dapper;
@@ -587,7 +574,7 @@ using Microsoft.Extensions.Configuration;
             connection.Open();
 
             string queryString = string.Format("{0}{1}", @"SELECT [IdPersona], [NoDocumento], [Nombres], [Apellidos]
-                                                        FROM [dbo].[Persona] 
+                                                        FROM [dbo].[Persona]
                                                         WHERE [IdPersona] = ", request.IdPersona);
 
             var persona = await connection.QueryAsync<GetPersonaQueryDto>(queryString);
@@ -595,7 +582,6 @@ using Microsoft.Extensions.Configuration;
             return persona.FirstOrDefault();
         }
     }
-
 
 45- Agregar la clase CreatePersonaDto.cs en la carpeta DTOs de CRUD.DDD.BackEnd.Net.Application:
 
@@ -616,7 +602,6 @@ using System.ComponentModel.DataAnnotations;
         public string Apellidos { get; set; }
     }
 
-
 46- Agregar la clase UpdatePersonaDto.cs en la carpeta DTOs de CRUD.DDD.BackEnd.Net.Application:
 
     public class UpdatePersonaDto
@@ -636,7 +621,6 @@ using System.ComponentModel.DataAnnotations;
         [StringLength(100)]
         public string Apellidos { get; set; }
     }
-
 
 47- Agregar "Controlador de API con acciones de lectura y escritura": PersonasController.cs
 
@@ -708,14 +692,12 @@ using Microsoft.AspNetCore.Mvc;
         }
     }
 
-
 48- Agregar Cors en archivo Program.cs después de builder:
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Personas.CORS", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+options.AddPolicy("Personas.CORS", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
-
 
 app.UseCors("Personas.CORS");
 
@@ -725,8 +707,7 @@ using CRUD.DDD.BackEnd.Net.Infrastructure.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DataContext") ?? throw new InvalidOperationException("Connection string 'DataContext' not found.")));
-
+options.UseSqlServer(builder.Configuration.GetConnectionString("DataContext") ?? throw new InvalidOperationException("Connection string 'DataContext' not found.")));
 
 50- Realizamos inyección de dependencias en archivo Program.cs después de builder:
 
@@ -755,11 +736,11 @@ using CRUD.DDD.BackEnd.Net.Application.Profiles;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DataContext") ?? throw new InvalidOperationException("Connection string 'DataContext' not found.")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("DataContext") ?? throw new InvalidOperationException("Connection string 'DataContext' not found.")));
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("Personas.CORS", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+options.AddPolicy("Personas.CORS", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 });
 
 // Add services to the container.
@@ -781,12 +762,11 @@ builder.Services.AddMediatR(typeof(GetPersonaQuery).GetTypeInfo().Assembly);
 
 var mappingConfig = new MapperConfiguration(mc =>
 {
-    mc.AddProfile(new MappingProfile());
+mc.AddProfile(new MappingProfile());
 });
 
 IMapper mapper = mappingConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
-
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -798,8 +778,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 }
 
 app.UseCors("Personas.CORS");
@@ -813,3 +793,226 @@ app.MapControllers();
 app.Run();
 
 52- Ejecutar y probar
+
+                     PRUEBAS
+
+1- Agregar nuevo proyecto de pruebas xunit CRUD.DDD.BackEnd.Net.Test en la solución
+
+2- Agregamos paquetes Nuget ak proyecto CRUD.DDD.BackEnd.Net.Test: Moq, FluentAssertions, Microsoft.AspNet.WebApi.Client, Microsoft.AspNetCore.Mvc.Testing
+
+3- Creamos carpetas para las pruebas Domain, Mocks, Application, API y adentro de Application agregamos Commands y Queries
+
+4- Creamos clase DomainTest en Domain:
+
+using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
+using FluentAssertions;
+
+public class DomainTest
+{
+/// <summary>
+/// Se prueba que se cree bien la persona
+/// </summary>
+[Fact]
+public void CreatePersonaTest1()
+{
+var idPersona1 = 1;
+var noDocumento1 = "12345";
+var nombres1 = "diego";
+var apellidos1 = "acevedo";
+
+            var persona1 = new Persona();
+
+            persona1.SetNoDocumento(NoDocumento.Create(noDocumento1));
+            persona1.SetNombres(Nombres.Create(nombres1));
+            persona1.SetApellidos(Apellidos.Create(apellidos1));
+
+            persona1.Should().NotBeNull();
+            persona1.NoDocumento.Value.Should().Be(noDocumento1);
+            persona1.Nombres.Value.Should().Be(nombres1);
+            persona1.Apellidos.Value.Should().Be(apellidos1);
+        }
+
+    }
+
+5- Creamos clase MockPersonaRepository en Mocks:
+
+using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
+using Moq;
+
+public class MockPersonaRepository
+{
+public static Mock<IPersonaRepository> GetPersonaRepository()
+{
+var idPersona1 = 1;
+var noDocumento1 = "12345";
+var nombres1 = "diego";
+var apellidos1 = "acevedo";
+
+            var idPersona2 = 2;
+            var noDocumento2 = "12346";
+            var nombres2 = "mary";
+            var apellidos2 = "uribe";
+
+            var persona1 = new Persona();
+
+            persona1.SetNoDocumento(NoDocumento.Create(noDocumento1));
+            persona1.SetNombres(Nombres.Create(nombres1));
+            persona1.SetApellidos(Apellidos.Create(apellidos1));
+
+            var persona2 = new Persona();
+
+            persona2.SetNoDocumento(NoDocumento.Create(noDocumento2));
+            persona2.SetNombres(Nombres.Create(nombres2));
+            persona2.SetApellidos(Apellidos.Create(apellidos2));
+
+            var listPersona = new List<Persona>
+            {
+                persona1,
+                persona2
+            };
+
+
+            var mockRepo = new Mock<IPersonaRepository>();
+
+            mockRepo.Setup(r => r.AddAsync(It.IsAny<Persona>())).ReturnsAsync(persona1);
+            //mockRepo.Setup(r => r.AddAsync(It.IsAny<Persona>())).ReturnsAsync(persona2);
+            mockRepo.Setup(r => r.GetByIdAsync(It.IsAny<IdPersona>())).ReturnsAsync(persona1);
+            mockRepo.Setup(r => r.GetAsync()).ReturnsAsync(listPersona);
+            mockRepo.Setup(r => r.UpdateAsync(It.IsAny<Persona>())).ReturnsAsync(true);
+            mockRepo.Setup(r => r.DeleteAsync(It.IsAny<IdPersona>())).ReturnsAsync(true);
+
+            return mockRepo;
+
+        }
+    }
+
+6- Creamos la clase CreatePersonaCommandHandlerTest adentro de Commands:
+
+using AutoMapper;
+using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Create;
+using CRUD.DDD.BackEnd.Net.Application.Profiles;
+using CRUD.DDD.BackEnd.Net.Domain.AggregatesModel.PersonaAggregate;
+using CRUD.DDD.BackEnd.Net.Test.Mocks;
+using FluentAssertions;
+using Moq;
+
+public class CreatePersonaCommandHandlerTest
+{
+private readonly Mock<IPersonaRepository> \_mockRepo;
+private readonly IMapper \_mapper;
+
+        public CreatePersonaCommandHandlerTest()
+        {
+            _mockRepo = MockPersonaRepository.GetPersonaRepository();
+            var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
+            _mapper = new Mapper(mappingConfig);
+        }
+
+        /// <summary>
+        /// Se prueba que se cree bien la Persona
+        /// </summary>
+        [Fact]
+        public async Task CreatePersonaCommandTest1()
+        {
+            var idPersona1 = 1;
+            var noDocumento1 = "12345";
+            var nombres1 = "diego";
+            var apellidos1 = "acevedo";
+
+            var handler = new CreatePersonaCommandHandler(_mockRepo.Object, _mapper);
+
+            var persona1 = await handler.Handle(new CreatePersonaCommand(noDocumento1, nombres1, apellidos1), CancellationToken.None);
+
+            persona1.Should().NotBeNull();
+            persona1.NoDocumento.Should().Be(noDocumento1);
+            persona1.Nombres.Should().Be(nombres1);
+            persona1.Apellidos.Should().Be(apellidos1);
+        }
+    }
+
+7- Para probar el controlador, se debe agregar la siguiente línea al final del archivo Program del proyecto CRUD.DDD.BackEnd.Net.API para que sea visible para el proyecto test:
+
+public partial class Program { }
+
+8- Agregamos la clase TestBuilder en la carpeta API:
+
+using Microsoft.AspNetCore.Mvc.Testing;
+
+public abstract class IntegrationTestBuilder : IDisposable
+{
+protected HttpClient TestClient;
+private bool Disposed;
+
+        protected IntegrationTestBuilder()
+        {
+            BootstrapTestingSuite();
+        }
+
+        protected void BootstrapTestingSuite()
+        {
+            Disposed = false;
+            var appFactory = new WebApplicationFactory<Program>();
+            TestClient = appFactory.CreateClient();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (Disposed)
+                return;
+
+            if (disposing)
+            {
+                TestClient.Dispose();
+            }
+
+            Disposed = true;
+        }
+    }
+
+9- Agregamos la clase PersonaControllerTest en la carpeta API:
+
+using CRUD.DDD.BackEnd.Net.Application.Commands.Persona.Create;
+using CRUD.DDD.BackEnd.Net.Application.Queries.Persona;
+using FluentAssertions;
+using System.Net.Http.Formatting;
+
+public class PersonaControllerTest : IntegrationTestBuilder
+{
+
+[Fact]
+public void GetPersonaExito()
+{
+var result = this.TestClient.GetAsync("api/Personas").Result;
+result.EnsureSuccessStatusCode();
+
+            var response = result.Content.ReadAsStringAsync().Result;
+            var responseQuery = System.Text.Json.JsonSerializer.Deserialize<List<GetPersonaQueryDto>>(response);
+
+            responseQuery.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void PostCreatePersonaExito()
+        {
+            var noDocumento1 = "12345";
+            var nombres1 = "diego";
+            var apellidos1 = "acevedo";
+
+            var result = this.TestClient.PostAsync("api/Personas", new CreatePersonaCommand(noDocumento1, nombres1, apellidos1), new JsonMediaTypeFormatter()).Result;
+            result.EnsureSuccessStatusCode();
+
+            var response = result.Content.ReadAsStringAsync().Result;
+            var responseQuery = System.Text.Json.JsonSerializer.Deserialize<GetPersonaQueryDto>(response);
+
+            responseQuery.Should().NotBeNull();
+            responseQuery.NoDocumento.Should().Be(noDocumento1);
+            responseQuery.Nombres.Should().Be(nombres1);
+            responseQuery.Apellidos.Should().Be(apellidos1);
+        }
+    }
