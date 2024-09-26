@@ -1,0 +1,423 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Test\\CRUD.DDD.BackEnd.Net.Test.csproj": {}
+  },
+  "projects": {
+    "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.API\\CRUD.DDD.BackEnd.Net.API.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.API\\CRUD.DDD.BackEnd.Net.API.csproj",
+        "projectName": "CRUD.DDD.BackEnd.Net.API",
+        "projectPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.API\\CRUD.DDD.BackEnd.Net.API.csproj",
+        "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+        "outputPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.API\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Application\\CRUD.DDD.BackEnd.Net.Application.csproj": {
+                "projectPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Application\\CRUD.DDD.BackEnd.Net.Application.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "MediatR.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.2.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Application\\CRUD.DDD.BackEnd.Net.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Application\\CRUD.DDD.BackEnd.Net.Application.csproj",
+        "projectName": "CRUD.DDD.BackEnd.Net.Application",
+        "projectPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Application\\CRUD.DDD.BackEnd.Net.Application.csproj",
+        "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+        "outputPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Domain\\CRUD.DDD.BackEnd.Net.Domain.csproj": {
+                "projectPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Domain\\CRUD.DDD.BackEnd.Net.Domain.csproj"
+              },
+              "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Infrastructure\\CRUD.DDD.BackEnd.Net.Infrastructure.csproj": {
+                "projectPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Infrastructure\\CRUD.DDD.BackEnd.Net.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.143, )"
+            },
+            "MediatR.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Domain\\CRUD.DDD.BackEnd.Net.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Domain\\CRUD.DDD.BackEnd.Net.Domain.csproj",
+        "projectName": "CRUD.DDD.BackEnd.Net.Domain",
+        "projectPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Domain\\CRUD.DDD.BackEnd.Net.Domain.csproj",
+        "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+        "outputPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Infrastructure\\CRUD.DDD.BackEnd.Net.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Infrastructure\\CRUD.DDD.BackEnd.Net.Infrastructure.csproj",
+        "projectName": "CRUD.DDD.BackEnd.Net.Infrastructure",
+        "projectPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Infrastructure\\CRUD.DDD.BackEnd.Net.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+        "outputPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Domain\\CRUD.DDD.BackEnd.Net.Domain.csproj": {
+                "projectPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Domain\\CRUD.DDD.BackEnd.Net.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.9, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Test\\CRUD.DDD.BackEnd.Net.Test.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Test\\CRUD.DDD.BackEnd.Net.Test.csproj",
+        "projectName": "CRUD.DDD.BackEnd.Net.Test",
+        "projectPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Test\\CRUD.DDD.BackEnd.Net.Test.csproj",
+        "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
+        "outputPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.Test\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.API\\CRUD.DDD.BackEnd.Net.API.csproj": {
+                "projectPath": "C:\\PROYECTOS\\CRUD\\CRUD.DDD.BackEnd.Net\\CRUD.DDD.BackEnd.Net.API\\CRUD.DDD.BackEnd.Net.API.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[6.12.1, )"
+            },
+            "Microsoft.AspNet.WebApi.Client": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Testing": {
+              "target": "Package",
+              "version": "[6.0.33, )"
+            },
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[17.5.0, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.72, )"
+            },
+            "coverlet.collector": {
+              "target": "Package",
+              "version": "[3.2.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.2, )"
+            },
+            "xunit.runner.visualstudio": {
+              "target": "Package",
+              "version": "[2.4.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

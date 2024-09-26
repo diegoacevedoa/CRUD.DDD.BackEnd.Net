@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD.DDD.BackEnd.Net.Domain
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD.DDD.BackEnd.Net.Infrastructure", "CRUD.DDD.BackEnd.Net.Infrastructure\CRUD.DDD.BackEnd.Net.Infrastructure.csproj", "{BE247DA6-7656-42EC-97B4-46F1F88CC0B1}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD.DDD.BackEnd.Net.Test", "CRUD.DDD.BackEnd.Net.Test\CRUD.DDD.BackEnd.Net.Test.csproj", "{80A81894-9F80-4E1B-8434-CB5CE9129376}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BE247DA6-7656-42EC-97B4-46F1F88CC0B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE247DA6-7656-42EC-97B4-46F1F88CC0B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE247DA6-7656-42EC-97B4-46F1F88CC0B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80A81894-9F80-4E1B-8434-CB5CE9129376}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80A81894-9F80-4E1B-8434-CB5CE9129376}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80A81894-9F80-4E1B-8434-CB5CE9129376}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80A81894-9F80-4E1B-8434-CB5CE9129376}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
